@@ -1,4 +1,4 @@
-package shark
+package middleware
 
 import (
 	"fmt"

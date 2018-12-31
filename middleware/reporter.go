@@ -1,4 +1,4 @@
-package shark
+package middleware
 
 import (
 	"errors"
@@ -89,13 +89,4 @@ func getRequestLogs(context context.Context) string {
 
 	// the date should be logged by iris' Logger, so we skip them
 	return fmt.Sprintf("%v %s %s %s", status, path, method, ip)
-}
-
-func CaptureRoutineException(exceptions exceptions.AggregatedRoutineException) {
-	// packet := raven.NewPacket(
-	// 	errString,
-	// 	raven.NewException(errors.New(errString), raven.NewStacktrace(2, 3, nil)),
-	// )
-	//
-	// raven.Capture(packet, getCaptureTags(exception))
 }
