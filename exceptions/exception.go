@@ -13,11 +13,6 @@ type Exception struct {
 	errorMessage string
 }
 
-// NewException generates new exception object with given data
-func NewException(code string, status http.StatusCode, message string, errorMessage string) Exception {
-	return Exception{code: code, status: status, message: message, errorMessage: errorMessage}
-}
-
 // GetCode returns exception code
 func (e Exception) GetCode() string {
 	if e.code == "" {
@@ -55,4 +50,9 @@ func (e Exception) GetTags() map[string]string {
 		"type":      "Exception",
 		"code":      e.code,
 	}
+}
+
+// ThrowException panic with an exception object filled with given data
+func ThrowException(code string, status http.StatusCode, message string, errorMessage string) {
+	panic(Exception{code: code, status: status, message: message, errorMessage: errorMessage})
 }
