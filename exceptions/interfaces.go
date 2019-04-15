@@ -1,9 +1,12 @@
 package exceptions
 
-import "github.com/Kamva/pantopoda/http"
+import (
+	"github.com/Kamva/pantopoda/http"
+	"github.com/Kamva/pantopoda/http/api"
+)
 
-// GenericException is an interface for any type of Exceptions
-type GenericException interface {
+// GlobalException is an interface for any type of Exceptions
+type GlobalException interface {
 	// GetCode returns exception code
 	GetCode() string
 
@@ -12,6 +15,11 @@ type GenericException interface {
 
 	// GetMessage returns exception end user readable Message
 	GetMessage() string
+}
+
+// GenericException is an interface for any server Exceptions
+type GenericException interface {
+	GlobalException
 
 	// GetErrorMessage returns exception error Message
 	GetErrorMessage() string
@@ -21,4 +29,15 @@ type GenericException interface {
 
 	// GetTags returns list of informational tags for reporting
 	GetTags() map[string]string
+}
+
+// ClientException is an interface for any client Exceptions
+type ClientException interface {
+	GlobalException
+
+	// GetPayload returns payload of client error response
+	GetPayload() api.Payload
+
+	// GetHeaders returns headers for client error response
+	GetHeaders() []api.ResponseHeader
 }

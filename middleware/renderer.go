@@ -25,7 +25,9 @@ func renderError(context context.Context) {
 		return
 	}
 
-	if validation, ok := err.(exceptions.ValidationException); ok {
+	if clientErr, ok := err.(exceptions.ClientException); ok {
+		response.Response(clientErr.GetCode(), clientErr.GetStatus(), clientErr.GetPayload(), clientErr.GetHeaders()...)
+	} else if validation, ok := err.(exceptions.ValidationException); ok {
 		response.UnprocessableEntity(validation.GetCode(), api.Payload{
 			Message: validation.GetMessage(),
 			Data:    validation.GetErrors(),
