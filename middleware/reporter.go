@@ -27,7 +27,9 @@ func ErrorReporter() context.Handler {
 				var reportMessage string
 				var reportTags map[string]string
 
-				if e, ok := err.(exceptions.GenericException); ok {
+				if _, ok := err.(exceptions.ClientException); ok {
+					return
+				} else if e, ok := err.(exceptions.GenericException); ok {
 					if !e.ShouldReport() {
 						return
 					}

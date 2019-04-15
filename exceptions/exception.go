@@ -16,7 +16,7 @@ type Exception struct {
 // GetCode returns exception code
 func (e Exception) GetCode() string {
 	if e.code == "" {
-		return "GENERAL_ERROR"
+		return GENERAL
 	}
 
 	return e.code
