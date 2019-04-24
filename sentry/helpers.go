@@ -15,10 +15,21 @@ func CaptureRoutineException(exception []exceptions.RoutineException) {
 		raven.NewException(errors.New(errString), raven.NewStacktrace(2, 3, nil)),
 	)
 
-	raven.Capture(packet, getCaptureTags(exception))
+	raven.Capture(packet, getRoutineExceptionTags(exception))
 }
 
-func getCaptureTags(exceptions []exceptions.RoutineException) map[string]string {
+// CaptureMessage formats and delivers a string message to the Sentry server.
+func CaptureMessage(message string, tags ...map[string]string) {
+	t := make(map[string]string)
+	for _, ts := range tags {
+		for key, value := range ts {
+			t[key] = value
+		}
+	}
+	raven.CaptureMessage(message, t)
+}
+
+func getRoutineExceptionTags(exceptions []exceptions.RoutineException) map[string]string {
 	var tag = make(map[string]string)
 
 	for _, value := range exceptions {
