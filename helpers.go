@@ -7,7 +7,7 @@ func PanicIfError(err error) {
 	}
 }
 
-// PanicIfErrCustomMsg panic with custom message if given error is not nil
+// PanicIfErrorWithMessage panic with custom message if given error is not nil
 func PanicIfErrorWithMessage(err error, message string) {
 	if err != nil {
 		panic(message)
