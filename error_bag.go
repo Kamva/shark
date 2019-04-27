@@ -28,3 +28,10 @@ func (b ErrorBag) Map(function ErrorBagMapper) ErrorBag {
 
 	return b
 }
+
+// NewErrorBag return new instance of error bag object.
+func NewErrorBag() ErrorBag {
+	return ErrorBag{
+		errors: make(map[string][]string),
+	}
+}
