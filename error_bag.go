@@ -29,6 +29,15 @@ func (b ErrorBag) Map(function ErrorBagMapper) ErrorBag {
 	return b
 }
 
+// Merge merge current error bag with given error bag and return the merged one.
+func (b ErrorBag) Merge(errorBag ErrorBag) ErrorBag {
+	for key, value := range errorBag.errors {
+		b.errors[key] = value
+	}
+
+	return b
+}
+
 // NewErrorBag return new instance of error bag object.
 func NewErrorBag() ErrorBag {
 	return ErrorBag{
