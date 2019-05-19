@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/Kamva/pantopoda/http/api"
 	"github.com/Kamva/shark/exceptions"
@@ -33,12 +34,22 @@ func renderError(context context.Context) {
 			Data:    validation.GetErrors(),
 		})
 	} else if e, ok := err.(exceptions.GenericException); ok {
-		response.Response(e.GetCode(), e.GetStatus(), api.Payload{
-			Message: e.GetMessage(),
-		})
+		payload := api.Payload{}
+		if os.Getenv("APP_ENV") != "production" {
+			payload.Message = e.GetMessage()
+		} else {
+			payload.Message = "INTERNAL ERROR"
+		}
+
+		response.Response(e.GetCode(), e.GetStatus(), payload)
 	} else {
-		response.InternalServerError(exceptions.GENERAL, api.Payload{
-			Message: fmt.Sprint(err),
-		})
+		payload := api.Payload{}
+		if os.Getenv("APP_ENV") != "production" {
+			payload.Message = fmt.Sprint(err)
+		} else {
+			payload.Message = "INTERNAL ERROR"
+		}
+
+		response.InternalServerError(exceptions.GENERAL, payload)
 	}
 }
