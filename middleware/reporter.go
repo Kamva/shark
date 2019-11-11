@@ -9,13 +9,12 @@ import (
 
 	"github.com/Kamva/shark/exceptions"
 	"github.com/getsentry/raven-go"
-	"github.com/kataras/iris"
-	"github.com/kataras/iris/context"
+	"github.com/kataras/iris/v12"
 )
 
 // ErrorReporter creates and returns a new error reporter middleware.
-func ErrorReporter() context.Handler {
-	return func(context context.Context) {
+func ErrorReporter() iris.Handler {
+	return func(context iris.Context) {
 		request := context.Request()
 
 		defer func() {
@@ -82,7 +81,7 @@ func getStacktrace() string {
 	return stacktrace
 }
 
-func getRequestLogs(context context.Context) string {
+func getRequestLogs(context iris.Context) string {
 	var status, ip, method, path string
 	status = strconv.Itoa(context.GetStatusCode())
 	path = context.Path()
