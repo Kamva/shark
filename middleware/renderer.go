@@ -6,19 +6,19 @@ import (
 
 	"github.com/Kamva/pantopoda/http/api"
 	"github.com/Kamva/shark/exceptions"
-	"github.com/kataras/iris/context"
+	"github.com/kataras/iris/v12"
 )
 
 // ErrorRenderer renders errors and exception in json format
-func ErrorRenderer() context.Handler {
-	return func(context context.Context) {
+func ErrorRenderer() iris.Handler {
+	return func(context iris.Context) {
 		defer renderError(context)
 
 		context.Next()
 	}
 }
 
-func renderError(context context.Context) {
+func renderError(context iris.Context) {
 	response := api.NewResponse(context)
 	err := context.Values().Get("exception")
 
